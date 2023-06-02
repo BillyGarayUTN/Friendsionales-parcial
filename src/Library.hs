@@ -47,12 +47,47 @@ esVital persona =  ((not.esJoven) persona) && (((>100).nivelDeEnergia) persona )
 nivelTotalDeAnsiedad :: [Persona] -> Number
 nivelTotalDeAnsiedad grupoPersonas = sumOf nivelDeAnsiedad grupoPersonas
 
+ansiedadMayorA50 :: Persona -> Bool
+ansiedadMayorA50 persona = (50<).nivelDeAnsiedad $ persona 
 
--- ansiedadMayora50 persona = (50<).nivelDeAnsiedad persona 
+nivelDeEnergiaPar :: Persona -> Bool
+nivelDeEnergiaPar persona = even.nivelDeEnergia $ persona
+
+--Se aplicó point free
+losMasCriticados :: (Persona->Bool) -> [Persona] ->  [String]   
+losMasCriticados criterio  = map nombre.(take 2).filter criterio 
+
+-- punto 3
+
+-- punto en comun realiza luego de hacer la tarea
+baja10NerviofrinasMin0 :: Number -> Number
+baja10NerviofrinasMin0 unNumero = (max 0).( 10 `subtract` ) $ unNumero
+
+--test de codearUnProyectoNuevo
+juan = Persona{nombre="juan", edad=10, nivelDeAlegria=100, nivelDeAnsiedad=100,tareas= [codearUnProyectoNuevo] }
+
+codearUnProyectoNuevo :: Persona->Persona
+codearUnProyectoNuevo persona = persona{nivelDeAlegria = nivelDeAlegria persona+110,nivelDeAnsiedad = baja10NerviofrinasMin0.(+50).nivelDeAnsiedad $ persona }
 
 
-losMasCriticados :: (Persona->Bool) ->  
-losMasCriticados criterio 
+--test de hacerTramitesEnAfip
+cecilia = Persona{nombre="cecilia", edad=10, nivelDeAlegria=40, nivelDeAnsiedad=40,tareas= [hacerTramitesEnAfip 2] }
+juan' = Persona{nombre="juan'", edad=10, nivelDeAlegria=100, nivelDeAnsiedad=250,tareas= [hacerTramitesEnAfip 2] }
+
+hacerTramitesEnAfip :: Number -> Persona -> Persona
+hacerTramitesEnAfip cantidadDeTramites persona = persona{ nivelDeAnsiedad = baja10NerviofrinasMin0.(max 300).(*cantidadDeTramites).nivelDeAnsiedad $ persona }
 
 
+--test de andarEnBici
+cecilia'= Persona{nombre="cecilia'", edad=10, nivelDeAlegria=90, nivelDeAnsiedad=65,tareas= [andarEnBici 1] }
+
+andarEnBici :: Number -> Persona -> Persona
+andarEnBici km persona = persona{ nivelDeAnsiedad = 0,nivelDeAlegria =((50*km)+).nivelDeAlegria $ persona}
+
+
+--test de escucharMusica
+santiago = Persona{nombre="santiago", edad=10, nivelDeAlegria=40, nivelDeAnsiedad=30,tareas= [hacerTramitesEnAfip 2] }
+
+escucharMusica :: Persona -> Persona
+escucharMusica persona = persona{nivelDeAnsiedad = baja10NerviofrinasMin0.(10 `subtract` ).nivelDeAnsiedad $ persona}
 
