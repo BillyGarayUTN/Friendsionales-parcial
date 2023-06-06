@@ -91,3 +91,19 @@ santiago = Persona{nombre="santiago", edad=10, nivelDeAlegria=40, nivelDeAnsieda
 escucharMusica :: Persona -> Persona
 escucharMusica persona = persona{nivelDeAnsiedad = baja10NerviofrinasMin0.(10 `subtract` ).nivelDeAnsiedad $ persona}
 
+
+-- Punto 4
+
+--test de punto 4
+tareasA1 = [ escucharMusica, andarEnBici 2] 
+
+energiaResultante :: Persona -> [Persona-> Persona] -> Persona
+energiaResultante persona tareas = foldr ($) persona tareas
+
+-- Punto 5
+
+-- hiceLoQuePude     ___ PRACTICAR  RECURSIVIDAD
+
+
+
+-- 
